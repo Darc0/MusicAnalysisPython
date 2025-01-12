@@ -23,3 +23,17 @@ df.fillna({
 
 print("\nStatistiques descriptives :")
 print(df.describe())
+
+comptes_genres = df['genre'].value_counts()
+print("\nNombre de chansons par genre :")
+print(comptes_genres)
+
+genre_dominant = comptes_genres.idxmax()
+print(f"Genre le plus représenté dans le top 100 : {genre_dominant}")
+
+plt.figure(figsize=(10, 6))
+comptes_genres.plot(kind='bar', color='skyblue')
+plt.title('Distribution des genres musicaux')
+plt.xlabel('Genre')
+plt.ylabel('Nombre de chansons')
+plt.show()
