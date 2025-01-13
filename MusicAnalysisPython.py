@@ -17,7 +17,7 @@ print(Valeurs_manquantes)
 
 
 df.fillna({
-    col: df[col].median() if df[col].dtype != '0' else df[col].mode()[0]
+    col: df[col].median() if np.issubdtype(df[col].dtype, np.number) else df[col].mode()[0]
     for col in df.columns
 }, inplace=True)
 
@@ -36,4 +36,15 @@ comptes_genres.plot(kind='bar', color='skyblue')
 plt.title('Distribution des genres musicaux')
 plt.xlabel('Genre')
 plt.ylabel('Nombre de chansons')
+plt.show()
+
+
+df['year'] = pd.to_numeric(df['year'], errors='coerce')
+df.dropna(subset=['year'], inplace=True)  
+regroupement_annee = df.groupby('year')['listens'].mean()
+
+regroupement_annee.plot(kind='line', figsize=(12, 6), color='green')
+plt.title('Nombre moyen d\'écoutes par année')
+plt.xlabel('Année')
+plt.ylabel('Écoutes moyennes')
 plt.show()
